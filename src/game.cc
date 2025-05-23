@@ -50,7 +50,7 @@ void Game::playerMove(){
 
 void Game::computerMove() {
     int number;
-    static bool seeded = false;
+    static bool seeded = false; //variable seeded is local to the function 
     if (!seeded) {
         srand(time(0));
         seeded = true;
