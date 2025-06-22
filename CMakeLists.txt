@@ -9,5 +9,4 @@ include_directories(include)
 add_executable(game 
     src/main.cc
     src/board.cc
-    src/game.cc
 )
