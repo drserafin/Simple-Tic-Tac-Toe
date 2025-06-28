@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Board.h"
+#include "board.h"
 
 int main() {
     TicTacToe game;
@@ -7,50 +7,43 @@ int main() {
 
     do {
         game.reset();
-
         while (true) {
-            std::cout << "\n--- TIC-TAC-TOE ---\n";
+            std::cout << "\n--- TIC-TAC-TOE ---";
             game.drawBoard();
+            if (!game.playerMove())
+                continue;
 
-            if (game.getCurrentPlayer() == game.getPlayerSymbol()) {
-                game.playerMove();
-            } else {
-                game.computerMove();
-            }
-
-            if (game.checkWin(game.getCurrentPlayer())) {
-                std::cout << "\n--- GAME OVER ---\n";
+            if (game.checkWin(game.getPlayerSymbol())) {
                 game.drawBoard();
-
-                if (game.getCurrentPlayer() == game.getPlayerSymbol()) {
-                    std::cout << "\nCongratulations! You (" << game.getPlayerSymbol() << ") win!\n";
-                } else {
-                    std::cout << "\nThe Computer (" << game.getComputerSymbol() << ") wins! Better luck next time.\n";
-                }
+                std::cout << "You win!\n";
                 break;
             }
 
             if (game.isFull()) {
-                std::cout << "\n--- GAME OVER ---\n";
                 game.drawBoard();
-                std::cout << "\nIt's a draw!\n";
+                std::cout << "It's a draw!\n";
                 break;
             }
 
-            game.switchCurrentPlayer();
+            game.computerMove();
+
+            if (game.checkWin(game.getComputerSymbol())) {
+                game.drawBoard();
+                std::cout << "Computer wins!\n";
+                break;
+            }
+
+            if (game.isFull()) {
+                game.drawBoard();
+                std::cout << "It's a draw!\n";
+                break;
+            }
         }
 
-        std::cout << "\nPlay again? (y/n): ";
+        std::cout << "Play again? (y/n): ";
         std::cin >> playAgain;
-
     } while (playAgain == 'y' || playAgain == 'Y');
 
-    std::cout << "\nThanks for playing!\n";
+    std::cout << "Thanks for playing!\n";
     return 0;
 }
-
-/*
-    mkdir build
-    cd build
-    cmake .. build .
-*/
